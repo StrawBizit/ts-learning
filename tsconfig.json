@@ -1,0 +1,27 @@
+{
+  // Documentation officielle : https://aka.ms/tsconfig
+  "compilerOptions": {
+    // ===== OÙ TROUVER LE CODE =====
+    "rootDir": "./src",          // Mes fichiers source .ts sont dans le dossier src/
+    "outDir": "./dist",          // Les fichiers compilés .js iront dans le dossier dist/
+
+    // ===== QUELLE VERSION DE JS PRODUIRE =====
+    "target": "ES2022",          // Compile vers JavaScript ES2022 (moderne, supporté par Node récent)
+    "module": "commonjs",        // Système de modules (compatible avec "type": "commonjs" du package.json)
+
+    // ===== RIGUEUR DU TYPAGE =====
+    "strict": true,              // Active TOUTES les vérifications strictes (RECOMMANDÉ)
+    "noUncheckedIndexedAccess": true,  // Force à vérifier que tableaux[i] n'est pas undefined
+
+    // ===== INTEROPÉRABILITÉ =====
+    "esModuleInterop": true,     // Permet d'importer des modules CommonJS comme des modules ES
+    "skipLibCheck": true,        // Ne vérifie pas les types des libs externes (gain de perf)
+    "forceConsistentCasingInFileNames": true,  // Empêche les bugs Windows/Linux sur la casse
+
+    // ===== CONFORT DE DEV =====
+    "sourceMap": true,           // Génère des fichiers .map pour debugger le TS depuis le JS
+    "resolveJsonModule": true    // Permet d'importer des fichiers .json directement
+  },
+  "include": ["src/**/*"],       // Compile tous les fichiers du dossier src/
+  "exclude": ["node_modules", "dist"]  // Ignore ces dossiers
+}
