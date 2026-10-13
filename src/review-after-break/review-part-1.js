@@ -112,11 +112,32 @@ function fullSentence(myBook) {
 
 console.log(fullSentence(laFaille));
 
+// COMMENTAIRE : J'ai complètement dû m'appuyer sur le cours pour pouvoir refaire ici.
+// Sans le cours, j'étais partie pour mettre le console.log directement dans la fonction
+// Sans le cours, je ne me rappelais plus qu'on devait mettre un nom () dans la fonction
+// Et pas sûre que j'aurais retrouver l'affichage console.log(myFunction(objectName))
+
 // ===== EXERCICE 6 =====
 // Écris une fonction qui reçoit un nom de potion et un nombre de points de vie soignés,
 // et qui renvoie un objet potion.
 // Crée ensuite une « Potion de soin majeure » qui soigne 80 PV,
 // puis affiche : La Potion de soin majeure rend 80 PV.
+
+function myPotion(name, hp) {
+  let potion = {
+    namePotion: name,
+    hpPotion: hp,
+  };
+  return potion;
+}
+
+let potionMajeure = myPotion("Potion de soin majeure", 80);
+
+console.log(
+  `La ${potionMajeure.namePotion} rend ${potionMajeure.hpPotion} PV.`,
+);
+
+// COMMENTAIRE : Pas du tout maîtrisé ! Même avec le cours, j'ai eu du mal (même si au final j'ai fini par y arriver, même avec beaucoup de mal !) !
 
 // ===== LEÇON 3 — Conditions =====
 
@@ -125,38 +146,143 @@ console.log(fullSentence(laFaille));
 // « Excellent » à partir de 16, « Bien » à partir de 12, « Passable » à partir de 10,
 // « Insuffisant » en dessous.
 
+const grade = 15;
+
+function gradeRating() {
+  if (grade >= 16) {
+    return "Excellent !";
+  } else if (grade >= 12) {
+    return "Bien";
+  } else if (grade >= 10) {
+    return "Passable";
+  } else {
+    return "Insuffisant";
+  }
+}
+
+console.log(gradeRating(grade));
+
+// COMMENTAIRE : étonnamment facile ici ! Pas trop eu besoin de réfléchir et encore moins d'avoir recours à mon cours !
+
 // ===== EXERCICE 8 =====
 // Écris une fonction qui reçoit un objet joueur (niveau, possède la clé ou non,
 // est banni ou non) et renvoie true si le joueur peut entrer dans le donjon, false sinon.
 // Il peut entrer s'il est au moins niveau 50, qu'il a la clé et qu'il n'est pas banni.
 
+const playerOne = {
+  level: 47,
+  hasKey: true,
+  isBanned: false,
+};
+
+const playerTwo = {
+  level: 51,
+  hasKey: true,
+  isBanned: false,
+};
+
+const playerThree = {
+  level: 52,
+  hasKey: true,
+  isBanned: true,
+};
+
+function canEnter(player) {
+  if (player.level >= 50 && player.hasKey && !player.isBanned) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+console.log(
+  `Le joueur 1 peut-il entrer dans le donjon ? ${canEnter(playerOne)}`,
+);
+
+console.log(
+  `Le joueur 2 peut-il entrer dans le donjon ? ${canEnter(playerTwo)}`,
+);
+
+console.log(
+  `Le joueur 3 peut-il entrer dans le donjon ? ${canEnter(playerThree)}`,
+);
+
+// COMMENTAIRE : Pareil, plutôt facile ici, je me suis même rappelée qu'on avait pas besoin de spécifier les booléen :
+// si propriété tout court sans test logique, ça veut dire égal true si !propriété (toujours tout court, sans test logique), ça veut dire égale false
+
 // ===== LEÇON 4 — Boucles =====
 
-// ===== EXERCICE 9 — PRÉDICTION : NE PAS EXÉCUTER AVANT D'AVOIR RÉPONDU =====
+// ===== EXERCICE 9 =====
+// PRÉDICTION : NE PAS EXÉCUTER AVANT D'AVOIR RÉPONDU
 // Dis ce qu'affiche chacun de ces deux codes, et explique pourquoi.
 // Écris ta réponse en commentaire. Ensuite seulement, tu peux dé-commenter pour vérifier.
 //
 // Code A
-// function test(x) {
-//   return console.log(x * 2);
-// }
-// let r = test(4);
-// console.log(r);
+//function test(x) {
+// return console.log(x * 2);
+//}
+//let r = test(4);
+//console.log(r);
 //
 // Code B
-// function somme(max) {
-//   let total = 0;
-//   for (let i = 1; i <= max; i++) {
-//     total = total + i;
-//     return total;
-//   }
+//function somme(max) {
+// let total = 0;
+//for (let i = 1; i <= max; i++) {
+// total = total + i;
+// return total;
 // }
-// console.log(somme(4));
+//}
+//console.log(somme(4));
+
+// CODE A Réponse AVANT exécuter (et sans revoir le cours) : r = console.log(4*2) = console.log (8) et donc r affiche 8 ; mais le fait de mettre à nouveau un console.log pour afficher r
+// qui lui-même contient déjà un console.log dans sa fonction, ça créé un problème d'une manière ou d'une autre et donc peut-être que ça afficherait :
+// "console.log(8)" ? COMMENTAIRE APRES exécuter : j'avais bien repéré le double console.log problématique mais pas identifié que ça conduirait à un "undefined".
+
+// CODE B Réponse AVANT exécuter (et sans revoir le cours) : Puisque le paramètre de la fonction somme prend "max" en paramètre et que le console.log
+// affiche somme(4), on ne peut imaginer que 4 = max. il s'agit d'une boucle où tant que i (qui vaut 1 au départ) est inférieur ou égal à 4 (dans cet exemple),
+// on fait le calcul dans la boucle. Elle s'arrête lorsque i > 4 sachant que i s'incrémente de 1 à chaque boucle.
+// Puisque le paramètre de la fonction somme prend "max" en paramètre et que le console.log affiche somme(4), on ne peut imaginer que 4 = max
+// Boucle 1 : i = 1 (et est donc inférieur ou égal à 4) donc total = 0 + 1 donc total = 1
+// Boucle 2 : i = 2 (et est donc inférieur ou égal à 4) donc total = 1 + 2 donc total = 3
+// Boucle 3 : i = 3 (et est donc inférieur ou égal à 4) donc total = 3 + 3 donc total = 6
+// Boucle 4 : i = 4 (et est donc inférieur ou égal à 4) donc total = 6 + 4 donc total = 10
+// Boucle 5 : i = 5 (et est donc supérieur à 4) donc boucle terminée.
+// Le résultat de la fonction pour somme(4) est total = 10 donc pour moi console.log doit afficher 10 ?
+// COMMENTAIRE APRES exécuter : Je ne me suis pas aidée du cours et j'ai d'ailleurs faux.
+// Le résultat semble montrer que la boucle n'est effectuée qu'une seule fois, mais je ne comprends pas pourquoi?
 
 // ===== EXERCICE 10 =====
 // Écris une fonction qui reçoit un nombre n et renvoie la somme de tous les entiers
 // de 1 à n. Par exemple, pour 4, elle renvoie 10.
 
+function sum(n) {
+  let x = 1;
+  for (i = 1; i <= n; i++) {
+    x = x + 1;
+    x++;
+  }
+  return x;
+}
+
+console.log(sum(4));
+
+// COMMENTAIRE : Je tatillonne mais j'y arrive pas
+
 // ===== EXERCICE 11 =====
 // Écris une fonction qui reçoit un nombre max et renvoie combien il y a de nombres pairs
 // entre 1 et max. Utilise-la pour afficher : Il y a 5 nombres pairs entre 1 et 10.
+
+function countEven(max) {
+  let evenCount = 0;
+  for (i = 1; i <= max; i++) {
+    if (i % 2 === 0) {
+      evenCount++;
+    }
+  }
+  return evenCount;
+}
+
+console.log(countEven(10));
+
+// COMMENTAIRE : J'ai réussi à m'aidant de mon cours pour savoir à quel endroit on devait tester la condition paire
+// et quelle était la syntaxe exact du modulo (je me rappelais du modulo mais plus exactement). Mais en tatillonnant, j'ai réussi à faire l'exercice !
