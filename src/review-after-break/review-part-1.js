@@ -14,7 +14,7 @@
 // une fois avec la concaténation.
 const name = "Épée de Givre";
 const price = 150;
-const rare = true;
+const isRare = true;
 
 console.log(`L'${name} coûte ${price} pièces d'or.`);
 console.log("L'" + name + " coûte " + price + " pièces d'or.");
@@ -74,14 +74,13 @@ console.log(`J'ai lu ${livre.titre} de ${livre.auteur}.`);
 // ===== EXERCICE 4 =====
 // Écris une fonction qui reçoit un prix hors taxes et renvoie le prix TTC (TVA de 20 %).
 // Utilise-la pour un prix de 50, puis affiche : Prix TTC : 60 €
-const excludingVAT = 50;
-const VAT = 0.2;
+const vatRate = 0.2;
 
-function includingVAT() {
-  return excludingVAT * (1 + VAT);
+function calculatePriceIncludingVat(priceExcludingVat) {
+  return priceExcludingVat * (1 + vatRate);
 }
 
-console.log(`Prix TTC : ${includingVAT()} €.`);
+console.log(`Prix TTC : ${calculatePriceIncludingVat(50)} €.`);
 
 // COMMENTAIRE : Des difficultés ici car je ne savais plus comment retourner le résultat.
 // Je me souvenais d'un "return" mais je le mettais sur la ligne du dessous et pas sur la ligne qui faisait le calcul.
@@ -92,7 +91,7 @@ console.log(`Prix TTC : ${includingVAT()} €.`);
 // et renvoie la phrase : Dune, de Frank Herbert, fait 412 pages.
 // Teste-la avec deux livres différents.
 
-const Dune = {
+const dune = {
   title: "Dune",
   author: "Frank Herbert",
   pages: 412,
@@ -106,11 +105,11 @@ const laFaille = {
   isRead: true,
 };
 
-function fullSentence(myBook) {
+function describeBook(myBook) {
   return `${myBook.title}, de ${myBook.author}, fait ${myBook.pages} pages.`;
 }
 
-console.log(fullSentence(laFaille));
+console.log(describeBook(laFaille));
 
 // COMMENTAIRE : J'ai complètement dû m'appuyer sur le cours pour pouvoir refaire ici.
 // Sans le cours, j'étais partie pour mettre le console.log directement dans la fonction
@@ -123,18 +122,18 @@ console.log(fullSentence(laFaille));
 // Crée ensuite une « Potion de soin majeure » qui soigne 80 PV,
 // puis affiche : La Potion de soin majeure rend 80 PV.
 
-function myPotion(name, hp) {
-  let potion = {
-    namePotion: name,
-    hpPotion: hp,
+function createPotion(name, healAmount) {
+  const potion = {
+    name: name,
+    healAmount: healAmount,
   };
   return potion;
 }
 
-let potionMajeure = myPotion("Potion de soin majeure", 80);
+const majorHealingPotion = createPotion("Potion de soin majeure", 80);
 
 console.log(
-  `La ${potionMajeure.namePotion} rend ${potionMajeure.hpPotion} PV.`,
+  `La ${majorHealingPotion.name} rend ${majorHealingPotion.healAmount} PV.`,
 );
 
 // COMMENTAIRE : Pas du tout maîtrisé ! Même avec le cours, j'ai eu du mal (même si au final j'ai fini par y arriver, même avec beaucoup de mal !) !
@@ -146,9 +145,7 @@ console.log(
 // « Excellent » à partir de 16, « Bien » à partir de 12, « Passable » à partir de 10,
 // « Insuffisant » en dessous.
 
-const grade = 15;
-
-function gradeRating() {
+function gradeRating(grade) {
   if (grade >= 16) {
     return "Excellent !";
   } else if (grade >= 12) {
@@ -160,7 +157,7 @@ function gradeRating() {
   }
 }
 
-console.log(gradeRating(grade));
+console.log(gradeRating(15));
 
 // COMMENTAIRE : étonnamment facile ici ! Pas trop eu besoin de réfléchir et encore moins d'avoir recours à mon cours !
 
@@ -255,16 +252,15 @@ console.log(
 // Écris une fonction qui reçoit un nombre n et renvoie la somme de tous les entiers
 // de 1 à n. Par exemple, pour 4, elle renvoie 10.
 
-function sum(n) {
-  let x = 1;
-  for (i = 1; i <= n; i++) {
-    x = x + 1;
-    x++;
+function sumUpTo(n) {
+  let total = 0;
+  for (let i = 1; i <= n; i++) {
+    total = total + i;
   }
-  return x;
+  return total;
 }
 
-console.log(sum(4));
+console.log(sumUpTo(4));
 
 // COMMENTAIRE : Je tatillonne mais j'y arrive pas
 
@@ -274,7 +270,7 @@ console.log(sum(4));
 
 function countEven(max) {
   let evenCount = 0;
-  for (i = 1; i <= max; i++) {
+  for (let i = 1; i <= max; i++) {
     if (i % 2 === 0) {
       evenCount++;
     }
