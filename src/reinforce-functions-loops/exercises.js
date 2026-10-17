@@ -182,13 +182,54 @@ console.log(
 // compris entre 1 et max. Pour max = 10, elle renvoie 18 (3 + 6 + 9).
 // Teste avec 10, puis avec 20.
 
+function sumMultiply(max) {
+  let total = 0;
+  for (let i = 1; i <= max; i++) {
+    if (i % 3 === 0) {
+      total = total + i;
+    }
+  }
+  return total;
+}
+
+console.log(`Somme de tous les multiples de 3, de 0 à 10 : ${sumMultiply(10)}`);
+console.log(`Somme de tous les multiples de 3, de 0 à 10 : ${sumMultiply(20)}`);
+// COMMENTAIRE : ici je me souviens qu'il y a 2 possibilités : ou bien on fait un incrément i++ avec une condition IF % 3 et on peut commencer avec i = 1,
+//ou bien on commence à 0 et on fait un incrément + 3 sans condition IF. J'ai tenté de faire la solution avec le IF.
+// Ca me sortait un trop grand nombre. Pour moi, impossible que ca me sorte un nombre si grand, alors j'ai testé uniquement la condition for (sans function) avec un console log pour que ça m'affiche i
+// à chaque boucle if i % 3 et je me suis rendue compte que ça me donnait tout sauf les multiples de 3 (donc exactement l'opposé de ce que je voulais). Je pensais que i % 3 sans rien derrière me donnerait
+// implicitement uniquement les multiples de 3 mais c'est l'inverse. Donc j'ai du détailler avec un === 0.
+// Une fois cela trouvé, ça demandait de la réflexion mais c'était pas si difficile. Difficulté moyenne je dirais.
+
 // ===== EXERCICE 7 =====
 // Voici les scores d'une équipe à un tournoi :
-// const scores = [14, 8, 17, 11, 6, 19, 10];
+const scores = [14, 8, 17, 11, 6, 19, 10];
 // Écris une fonction qui reçoit un tableau de scores et permet d'afficher :
 //   - le nombre de scores supérieurs ou égaux à 10
 //   - le meilleur score
 // Affiche une phrase avec les deux informations.
+
+function showScores(scores) {
+  let greatScore = 0;
+  let maxScore = Math.max(...scores);
+  for (score of scores) {
+    if (score >= 10) {
+      greatScore++;
+    }
+  }
+  return { greatScore: greatScore, maxScore: maxScore };
+}
+
+const scoreTable = showScores(scores);
+
+console.log(
+  `Il y a eu ${scoreTable.greatScore} scores supérieurs ou égaux à 10 et parmi eux, le meilleur score était : ${scoreTable.maxScore}.`,
+);
+
+// COMMENTAIRE : pas mal de difficultés ici, j'ai du chercher comment on trouvait le max d'un tableau, et même après avoir trouvé que c'était Math.max (sur le même principe que math.round), j'ai du chercher sur internet
+// qu'il fallait rajouter ... devant ! (je n'avais pas la syntaxe). Une fois que je me suis assurée que Math.max(...scores) renvoyait bien le max et pas une erreur ou un NaN, j'ai pu l'intégrer dans la fonction.
+// Étonnamment, ce n'était pas si difficile ici de me souvenir de renvoyer un objet et d'aller chercher un objet via une variable ensuite, par contre (ni de faire mon for of avec le if imbriqué). Ca m'a quand même
+// demandé de la réflexion mais finalement sans le Math.max qui m'a vraiment posé problème, ça aurait été un exercice de difficulté moyenne.
 
 // ===== EXERCICE 8 — DÉBOGAGE =====
 // Cette fonction est censée renvoyer le nombre total de potions dans un inventaire,
@@ -197,22 +238,28 @@ console.log(
 // Dé-commente le code, exécute-le, puis écris en commentaire TOUS les problèmes que tu trouves
 // et leur cause, AVANT de corriger quoi que ce soit.
 //
-// const inventory = [3, 7, 2, 12, 5, 2];
-//
-// function countPotions(slots) {
-//   let total = 1;
-//   let bigSlots = 0;
-//   for (slot of slots) {
-//     total = total + slot;
-//     if (slot > 5) {
-//       bigSlots = bigSlots++;
-//     }
-//     return { total: total, bigSlots: bigSlots };
-//   }
-// }
-//
-// const result = countPotions(inventory);
-// console.log(`${result.total} potions, ${result.bigSlots} emplacements à plus de 5`);
+const inventory = [3, 7, 2, 12, 5, 2];
+function countPotions(slots) {
+  let total = 0;
+  let bigSlots = 0;
+  for (slot of slots) {
+    total = total + slot;
+    if (slot > 5) {
+      bigSlots++;
+    }
+  }
+  return { total: total, bigSlots: bigSlots };
+}
+
+const result = countPotions(inventory);
+console.log(
+  `${result.total} potions, ${result.bigSlots} emplacements à plus de 5`,
+);
+
+// COMMENTAIRE : alors déjà total est initialisé à 1 et pas à 0. Donc pour moi c'est comme si on ajoutait directement une potion à notre total.
+// Ensuite, bigSlots++ se suffit à lui même donc il faut pas mettre le bigSlots = avant.
+// COMMENTAIRE APRES execute : j'ai raté que le return était pas au bon endroit.... Pour ma défense, ça ressemble plus à une faute d'inattention qu'autre chose
+// car dès que j'ai vu le résultat, j'ai tout de suite compris que ma boucle tournait pas et que donc c'était mon return qui était au niveau du for et pas de la fonction !
 
 // ===== EXERCICE 9 =====
 // Un dragon a 500 points de vie. Ton héros lui inflige 45 dégâts à chaque tour.
@@ -221,6 +268,33 @@ console.log(
 //   - le nombre de tours nécessaires pour vaincre le dragon (ses PV tombent à 0 ou moins)
 //   - le nombre de dégâts « en trop » infligés au dernier tour
 // Teste avec 500 PV et 45 dégâts, puis avec 300 PV et 50 dégâts.
+
+function killDragon(dragonHealth, damagePerTurn) {
+  let turn = 0;
+  let currentHealth = dragonHealth;
+  let overKill = Math.abs(currentHealth);
+  while (currentHealth - damagePerTurn > -50) {
+    turn++;
+    currentHealth = dragonHealth - turn * damagePerTurn;
+    overKill = Math.abs(currentHealth);
+  }
+  return { turn: turn, overKill: overKill };
+}
+
+const testOne = killDragon(500, 45);
+const testTwo = killDragon(300, 50);
+
+console.log(testOne.turn);
+console.log(testOne.overKill);
+
+console.log(testTwo.turn);
+console.log(testTwo.overKill);
+
+// COMMENTAIRE : pas mal de difficultés ici mais j'ai l'impression que c'était plus une difficulté de logique mathématique que de code réellement. Je sais que mon > -50 est pas du tout propre, mais ça marche :)
+// En gros ça me permet de compter un coup supplémentaire. La logique Math.abs était facile à trouver après Math.round et Math.max plus haut, surtout que je connaissais déjà "abs" via Excel.
+// le retour en objet, la variable qui permet de récupérer l'objet tout ça était fait minute 1 de l'exercice. C'est les calculs qui m'ont posé problème. Hâte de voir la vraie solution du coup...
+// Egalement je suis repassée par 2 variables (testOne et testTwo) pour tester chaque possibilités, c'est pareil, je ne pense pas que ce soit propre.... Bref ma solution fonctionne mais c'est clairement pas
+// ce qu'il fallait faire... Mais je n'ai tout simplement pas réussi à faire une solution propre. J'ai juste conscience que même si ça marche, c'est du bidouillage...
 
 // ===================================================================
 // PARTIE D — Lire le besoin jusqu'au bout
