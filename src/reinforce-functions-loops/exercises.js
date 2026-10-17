@@ -319,10 +319,63 @@ console.log(testTwo.overKill);
 // Si un de tes résultats ne correspond pas : cherche POURQUOI avant de modifier ton code,
 // et note en commentaire ce que tu as trouvé.
 
+function calculateBasket(total, isMember, coupon) {
+  const welcomeDiscount = 5;
+  const memberDiscount = 0.1;
+  let memberTotal = total;
+  let withCouponTotal = memberTotal;
+  if (isMember === true) {
+    memberTotal = total * (1 - memberDiscount);
+  } else {
+    memberTotal = total;
+  }
+  if (total > 30 && coupon === "BIENVENUE") {
+    withCouponTotal = memberTotal - welcomeDiscount;
+  } else {
+    withCouponTotal = memberTotal;
+  }
+  return withCouponTotal;
+}
+
+console.log(calculateBasket(50, true));
+console.log(calculateBasket(50, false, "BIENVENUE"));
+console.log(calculateBasket(50, true, "BIENVENUE"));
+console.log(calculateBasket(30, false, "BIENVENUE"));
+console.log(calculateBasket(50, false, ""));
+
+// COMMENTAIRE : J'avais la ligne à 40 qui ressortait à 45. J'ai cherché à comprendre pourquoi et juste avant,
+// j'avais eu une erreur où mon code ne s'exécutait pas car memberTotal n'était pas déclaré (alors que je le déclarais mais à l'intérieur du IF)
+// j'ai du forcer la déclaration du memberTotal (ce que je ne trouve pas super pertinent en l'état) avant le IF.
+// Donc pour cette erreur, je me suis rendue compte que j'étais dans le même cas où je déclarais une variable directement dans mon IF, même si le code
+// voulait bien s'éxecuter cette fois. Je me suis dit que ça devait être le même cas du coup. Mais je ne suis pas fan de déclarer les variables avant les IF
+// avec des valeurs placeholder qu'on va tout de suite changer dans les IF après.... A mon avis, j'ai pas fait correctement...
+
 // ===== EXERCICE 11 =====
 // Écris une fonction qui reçoit un objet joueur (nom, connecté ou non) et renvoie
 // la phrase « Jaina est en ligne » ou « Jaina est hors ligne ».
 // Teste avec deux joueurs, un dans chaque situation.
+
+function checkPlayerOnline(player) {
+  const onlineMessage = player.isOnline ? `en ligne` : `hors ligne`;
+  return `${player.name} est ${onlineMessage}.`;
+}
+
+const bizit = {
+  name: "Bizit",
+  isOnline: true,
+};
+
+const targok = {
+  name: "Targok",
+  isOnline: false,
+};
+
+console.log(checkPlayerOnline(bizit));
+console.log(checkPlayerOnline(targok));
+
+// COMMENTAIRE : j'avais commencé à écrire une full condition IF avant de me rappeler (en me faisant à nouveau la réflexion que c'était long et fastidieux pour rien) que c'était
+// typiquement un cas d'utilisation du ternaire ! Je me souviens de tête que le true est avec un signe ? au début et le false avec : au début. Mais je me souviens plus de la première ligne avec la syntaxe de la condition.
+// j'ai du revoir le cours pour cela.
 
 // ===================================================================
 // BONUS — Tout ensemble
@@ -330,13 +383,36 @@ console.log(testTwo.overKill);
 
 // ===== EXERCICE 12 =====
 // Voici les participants d'un tournoi :
-// const players = [
-//   { name: "Thrall", score: 84, isDisqualified: false },
-//   { name: "Jaina", score: 91, isDisqualified: true },
-//   { name: "Sylvanas", score: 88, isDisqualified: false },
-//   { name: "Anduin", score: 79, isDisqualified: false },
-// ];
+const players = [
+  { name: "Thrall", score: 84, isDisqualified: false },
+  { name: "Jaina", score: 91, isDisqualified: true },
+  { name: "Sylvanas", score: 88, isDisqualified: false },
+  { name: "Anduin", score: 79, isDisqualified: false },
+];
 // Écris une fonction qui reçoit la liste des participants et permet d'afficher :
 //   - le nom du vainqueur (le meilleur score parmi les joueurs NON disqualifiés)
 //   - le nombre de joueurs non disqualifiés
 // Affiche : Sylvanas remporte le tournoi parmi 3 joueurs en lice.
+
+function showWinner(players) {
+  let playerCount = 0;
+  let winnerName = "";
+  let winnerScore = 0;
+  for (const player of players) {
+    if (score > winnerScore && !isDisqualified) {
+      winnerScore = score;
+      winnerName = name;
+    }
+    if (!isDisqualified) {
+      playerCount++;
+    }
+  }
+  return { winnerName: winnerName, playerCount: playerCount };
+}
+const tournamentResult = showWinner(players);
+
+console.log(
+  `${tournamentResult.winnerName} remporte le tournoi parmi ${tournamentResult.playerCount} joueurs en lice. `,
+);
+
+// COMMENTAIRE : ca ne marche pas et je ne comprends pas pourquoi... Ca me dit que isDisqualified n'est pas défini mais il est dans la variable objet players donc il n'a pas à être défini pour moi....
