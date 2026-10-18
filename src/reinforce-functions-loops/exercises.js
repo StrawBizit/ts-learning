@@ -34,12 +34,12 @@ console.log(createCharacter("Sylvanas", 81));
 // Écris ta réponse, puis dé-commente, vérifie, et corrige le code.
 //
 const discountRate = 0.1;
-const price = 80;
 //
-function applyDiscount() {
+function applyDiscount(price) {
   return price - price * discountRate;
 }
 console.log(applyDiscount(200));
+console.log(applyDiscount(80));
 
 // COMMENTAIRE AVANT exécute : on ne donne pas de paramètre à applyDiscount donc à partir de là, j'imagine que quand on appelle la fonction avec un paramètre dans le console.log,
 // la fonction ne sait pas où mettre ce paramètre et donc soit entre en erreur soit ne le prends pas en compte (plus probablement ne la prendra pas en compte).
@@ -142,11 +142,11 @@ console.log(message);
 //   Prix de départ : 200 pièces / Remise : 30 pièces / Prix final : 170 pièces
 // Teste avec un membre et avec un non-membre.
 
-let DiscountRateExo = 0.15;
+let discountRateExo = 0.15;
 
 function calculateFinalPrice(price, isMember) {
   if (isMember === true) {
-    discountRateExo = DiscountRateExo;
+    discountRateExo = discountRateExo;
   } else {
     discountRateExo = 0;
   }
@@ -193,7 +193,7 @@ function sumMultiply(max) {
 }
 
 console.log(`Somme de tous les multiples de 3, de 0 à 10 : ${sumMultiply(10)}`);
-console.log(`Somme de tous les multiples de 3, de 0 à 10 : ${sumMultiply(20)}`);
+console.log(`Somme de tous les multiples de 3, de 0 à 20 : ${sumMultiply(20)}`);
 // COMMENTAIRE : ici je me souviens qu'il y a 2 possibilités : ou bien on fait un incrément i++ avec une condition IF % 3 et on peut commencer avec i = 1,
 //ou bien on commence à 0 et on fait un incrément + 3 sans condition IF. J'ai tenté de faire la solution avec le IF.
 // Ca me sortait un trop grand nombre. Pour moi, impossible que ca me sorte un nombre si grand, alors j'ai testé uniquement la condition for (sans function) avec un console log pour que ça m'affiche i
@@ -242,7 +242,7 @@ const inventory = [3, 7, 2, 12, 5, 2];
 function countPotions(slots) {
   let total = 0;
   let bigSlots = 0;
-  for (slot of slots) {
+  for (const slot of slots) {
     total = total + slot;
     if (slot > 5) {
       bigSlots++;
