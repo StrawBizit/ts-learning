@@ -399,11 +399,11 @@ function showWinner(players) {
   let winnerName = "";
   let winnerScore = 0;
   for (const player of players) {
-    if (score > winnerScore && !isDisqualified) {
-      winnerScore = score;
-      winnerName = name;
+    if (player.score > winnerScore && !player.isDisqualified) {
+      winnerScore = player.score;
+      winnerName = player.name;
     }
-    if (!isDisqualified) {
+    if (!player.isDisqualified) {
       playerCount++;
     }
   }
